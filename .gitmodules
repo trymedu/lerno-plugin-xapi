@@ -1,0 +1,3 @@
+[submodule "vendor/lerno"]
+	path = vendor/lerno
+	url = https://github.com/trymedu/lerno.git

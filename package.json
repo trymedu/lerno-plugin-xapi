@@ -1,0 +1,64 @@
+{
+  "name": "@medu/lerno-plugin-xapi",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "xAPI (Experience API) telemetry for Lerno: turns session events into statements for a Learning Record Store.",
+  "main": "./dist/esm/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/esm/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "workspaces": [
+    "vendor/lerno/packages/lerno"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json --emitDeclarationOnly && bun build src/index.ts --outdir dist/esm --format esm --target node --packages external && echo '{\"type\":\"module\"}' > dist/esm/package.json",
+    "build:engine": "bun run --cwd vendor/lerno/packages/lerno build",
+    "type-check": "bun run build:engine && tsc --noEmit",
+    "test": "bun run build:engine && bun test src/*.spec.ts",
+    "prepack": "bun run build",
+    "prepublishOnly": "bun run type-check && bun run test"
+  },
+  "peerDependencies": {
+    "@medu/lerno": "^2.0.0"
+  },
+  "devDependencies": {
+    "@medu/lerno": "workspace:*",
+    "@types/bun": "^1.2.20",
+    "typescript": "^5.7.3"
+  },
+  "keywords": [
+    "lerno",
+    "xapi",
+    "telemetry",
+    "learning-record-store",
+    "education"
+  ],
+  "author": "Lerno contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trymedu/lerno-plugin-xapi.git"
+  },
+  "homepage": "https://github.com/trymedu/lerno-plugin-xapi#readme",
+  "bugs": {
+    "url": "https://github.com/trymedu/lerno-plugin-xapi/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
